@@ -1,0 +1,4 @@
+# .gitignore
+
+.env
+#this will ignore secret environment variables necessary to run the application.

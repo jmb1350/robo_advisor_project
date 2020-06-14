@@ -22,7 +22,7 @@ response = requests.get(request_url)
 parsed_response = json.loads(response.text)
 
 
-
+#dates
 dtime = parsed_response["Time Series (Daily)"]
 dates = list(dtime.keys())
 
@@ -33,7 +33,27 @@ last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 latest_close = dtime[latest_day]["4. close"]
 
 
-#breakpoint()
+#pricing data
+high_prices = []
+
+for date in dates:
+    high_price = dtime[date]["2. high"]
+    high_prices.append(float(high_price))
+
+recent_high = max(high_prices)
+
+
+low_prices = []
+
+for date in dates:
+    low_price = dtime[date]["3. low"]
+    low_prices.append(float(low_price))
+
+recent_low = min(low_prices)
+
+
+
+
 
 #Info Outputs
 
@@ -45,8 +65,8 @@ print("REQUEST AT: 2018-02-20 02:00pm")
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
-print("RECENT HIGH: $101,000.00")
-print("RECENT LOW: $99,000.00")
+print(f"RECENT HIGH: {to_usd(float(recent_high))}")
+print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
 print("RECOMMENDATION REASON: TODO")

@@ -21,9 +21,16 @@ response = requests.get(request_url)
 
 parsed_response = json.loads(response.text)
 
+
+
+dtime = parsed_response["Time Series (Daily)"]
+dates = list(dtime.keys())
+
+latest_day = dates[0]  #sort to ensure latest day is first - right now assumes 1st day
+
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
 
-latest_close = parsed_response["Time Series (Daily)"]["2020-06-12"]["4. close"]
+latest_close = dtime[latest_day]["4. close"]
 
 
 #breakpoint()

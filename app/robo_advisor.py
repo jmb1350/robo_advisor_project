@@ -1,7 +1,10 @@
 # app/robo_advisor.py
 
-import requests
 import json
+import csv
+import os
+
+import requests
 
 
 def to_usd(my_price):
@@ -35,21 +38,32 @@ latest_close = dtime[latest_day]["4. close"]
 
 #pricing data
 high_prices = []
-
-for date in dates:
-    high_price = dtime[date]["2. high"]
-    high_prices.append(float(high_price))
-
-recent_high = max(high_prices)
-
-
 low_prices = []
 
 for date in dates:
+    high_price = dtime[date]["2. high"]
     low_price = dtime[date]["3. low"]
+    high_prices.append(float(high_price))
     low_prices.append(float(low_price))
 
+recent_high = max(high_prices)
 recent_low = min(low_prices)
+
+
+
+
+#write to CSV
+
+csv_file_path = os.path.join(os.path.dirname(__file__), "..", "data", "prices.csv")
+
+with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writing"
+    writer = csv.DictWriter(csv_file, fieldnames=["city", "name"])
+    writer.writeheader() # uses fieldnames set above
+    writer.writerow({"city": "New York", "name": "Yankees"})
+    writer.writerow({"city": "New York", "name": "Mets"})
+    writer.writerow({"city": "Boston", "name": "Red Sox"})
+    writer.writerow({"city": "New Haven", "name": "Ravens"})
+
 
 
 
@@ -69,7 +83,11 @@ print(f"RECENT HIGH: {to_usd(float(recent_high))}")
 print(f"RECENT LOW: {to_usd(float(recent_low))}")
 print("-------------------------")
 print("RECOMMENDATION: BUY!")
-print("RECOMMENDATION REASON: TODO")
+print("RECOMMENDATION REASON: Good Investment")
+print("-------------------------")
+print(f"WRITING DATA TO CSV: {csv_file_path}")
 print("-------------------------")
 print("HAPPY INVESTING!")
 print("-------------------------")
+
+

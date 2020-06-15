@@ -136,9 +136,11 @@ close_formula = float(high_multiple) + float(latest_close)
 print("-------------------------")
 
 if float(close_formula) <= float(recent_high):
-    print("RECOMMENDATION: Buy! This stock is a good deal!")
+    print("RECOMMENDATION: BUY!")
+    print("REASON: This stock is a good deal!")
 else:
-    print("RECOMMENDATION: Don't buy! This stock is too expensive.")
+    print("RECOMMENDATION: DON'T BUY!")
+    print("REASON: This stock is too expensive.")
 print("-------------------------")
 print(f"WRITING DATA TO CSV: {csv_file_path}")
 print("-------------------------")
@@ -147,6 +149,4 @@ print("-------------------------")
 
 
 
-
-
-#print("Sorry, data isn't available. Please try again later.")    
+  

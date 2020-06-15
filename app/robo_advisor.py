@@ -3,7 +3,7 @@
 import json
 import csv
 import os
-import datetime
+from datetime import datetime
 
 from dotenv import load_dotenv
 import requests
@@ -16,9 +16,12 @@ def to_usd(my_price):
 
 
 
+
+
+
 #Info Inputs and Data Requests
 api_key = os.environ.get("ALPHAVANTAGE_API_KEY")
-symbol = input("Please input a ticker symbol:")
+symbol = input("Please input a ticker symbol: ")
 
 
 while symbol.isdigit():
@@ -43,8 +46,6 @@ if "Error" in response.text:
 
 
 
-
-
 #DATES
 
 tsd = parsed_response["Time Series (Daily)"]
@@ -56,8 +57,6 @@ latest_day = dates[0]
 latest_close = tsd[latest_day]["4. close"]
 
 last_refreshed = parsed_response["Meta Data"]["3. Last Refreshed"]
-
-
 
 
 
@@ -74,12 +73,6 @@ for date in dates:
 
 recent_high = max(high_prices)
 recent_low = min(low_prices)
-
-
-
-
-
-
 
 
 
@@ -105,14 +98,7 @@ with open(csv_file_path, "w") as csv_file: # "w" means "open the file for writin
         })
 
 
-
-
-
-
-
-
-
-
+now = datetime.now()
 
 #INFO OUTPUTS
 
@@ -120,7 +106,7 @@ print("-------------------------")
 print("SELECTED SYMBOL: " + symbol)
 print("-------------------------")
 print("REQUESTING STOCK MARKET DATA...")
-print("REQUEST AT: 2018-02-20 02:00pm")
+print("REQUEST AT: ", now.strftime("%b %d %Y %H:%M:%S %p"))
 print("-------------------------")
 print(f"LATEST DAY: {last_refreshed}")
 print(f"LATEST CLOSE: {to_usd(float(latest_close))}")
